@@ -9,6 +9,5 @@
     "--device=/dev/kvm",
     "--cap-add=NET_ADMIN",
     "--stop-timeout", "120"
-  ],
-  "postCreateCommand": "/bin/bash /workspaces/test-osx-dtn/.devcontainer/setup.sh"
+  ]
 }
