@@ -1,4 +1,4 @@
-FROM sickcodes/docker-osx:ventura
+FROM dockurr/macos
 
 # Install necessary dependencies
 RUN apt-get update && apt-get install -y curl sudo
