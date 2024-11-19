@@ -7,5 +7,7 @@
         "--cap-add=NET_ADMIN",
         "--stop-timeout", "120"
     ],
-    "image": "dockurr/macos"
+    "image": "dockurr/macos",
+    "postCreateCommand": "/bin/bash /workspaces/test-osx-dtn/.devcontainer/setup.sh",
+    "remoteUser": "docker"
 }
