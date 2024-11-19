@@ -9,5 +9,4 @@
     ],
     "image": "dockurr/macos",
     "postCreateCommand": "/bin/bash /workspaces/test-osx-dtn/.devcontainer/setup.sh",
-    "remoteUser": "docker"
 }
