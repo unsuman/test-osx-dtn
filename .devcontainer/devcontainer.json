@@ -5,13 +5,12 @@
   },
   "runArgs": [
     "--rm",
-    "-p", "9000:8006",
     "-p", "50922:10022",
     "--device=/dev/kvm",
     "--cap-add=NET_ADMIN",
     "--stop-timeout", "120",
-    "-v", "/home/mac_hdd_ng.img:/image",
     "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
-    "-e", "DISPLAY=${env:DISPLAY}"
+    "-e", "DISPLAY=${env:DISPLAY:-:0.0}",
+    "-e", "SHORTNAME=catalina"
   ]
 }
