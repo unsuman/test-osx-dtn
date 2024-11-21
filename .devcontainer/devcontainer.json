@@ -1,19 +1,4 @@
 {
   "name": "OSX docker",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
-  "runArgs": [
-    "--rm",
-    "-p", "50923:10022",
-    "-p", "6002:5999",
-    "--device=/dev/kvm",
-    "--cap-add=NET_ADMIN",
-    "--stop-timeout", "120",
-    "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
-    "-e", "DISPLAY=${env:DISPLAY:-:0.0}",
-    "-e", "EXTRA=-display none -vnc 0.0.0.0:99,password=off",
-    "-e", "SHORTNAME=ventura"
-  ],
   "onCreateCommand": "/workspace/setup.sh && /workspace/start-docker-osx.sh"
 }
