@@ -1,12 +1,11 @@
+# .devcontainer/Dockerfile
 FROM sickcodes/docker-osx:latest
 
-# Install development tools
-RUN apt-get update && apt-get install -y \
+# Using apk package manager since base image is Alpine Linux
+RUN apk update && apk add --no-cache \
     curl \
     git \
-    wget \
-    vim \
-    && rm -rf /var/lib/apt/lists/*
+    wget
 
-COPY start-docker-osx.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/start-docker-osx.sh
+COPY startup.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/startup.sh
