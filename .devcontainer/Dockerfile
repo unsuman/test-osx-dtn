@@ -1,8 +1,14 @@
 # Use the base image from sickcodes
 FROM sickcodes/docker-osx:latest
 
+# Switch to root user to install Docker CLI
+USER root
+
 # Install Docker CLI
 RUN pacman -Syu --noconfirm docker
+
+# Switch back to the default user
+USER arch
 
 # Copy the start script into the container
 COPY start-docker-osx.sh /usr/local/bin/start-docker-osx.sh
