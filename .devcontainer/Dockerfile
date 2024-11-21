@@ -8,8 +8,8 @@ RUN mkdir -p /tmp/scripts
 COPY start-docker-osx.sh /tmp/scripts/start-docker-osx.sh
 
 # Expose the ports for SSH and VNC
-EXPOSE 50923
-EXPOSE 6001
+EXPOSE 50924
+EXPOSE 6002
 
 # Set the entrypoint to run the start script
 ENTRYPOINT ["/tmp/scripts/start-docker-osx.sh"]
