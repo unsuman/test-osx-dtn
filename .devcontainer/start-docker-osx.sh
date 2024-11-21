@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ls -a
+
 # CMD from the docker-osx Dockerfile
 ! [[ -e "${BASESYSTEM_IMAGE:-BaseSystem.img}" ]] \
     && printf '%s\n' "No BaseSystem.img available, downloading ${SHORTNAME}" \
@@ -37,4 +39,4 @@
         --height "${HEIGHT:-1080}" \
         --output-bootdisk "${BOOTDISK:=/home/arch/OSX-KVM/OpenCore/OpenCore.qcow2}" \
 || exit 1 ; } \
-; ./usr/local/bin/enable-ssh.sh && /bin/bash -c ./Launch.sh
+; ./enable-ssh.sh && /bin/bash -c ./Launch.sh
