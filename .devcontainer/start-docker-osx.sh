@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ls -a 
+
 docker run -i \
     --device /dev/kvm \
     -p 50922:10022 \
