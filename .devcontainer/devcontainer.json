@@ -15,5 +15,5 @@
     "-e", "EXTRA=-display none -vnc 0.0.0.0:99,password=off",
     "-e", "SHORTNAME=ventura"
   ],
-  "postCreateCommand": "/workspace/start-docker-osx.sh"
+  "postCreateCommand": "/workspaces/start-docker-osx.sh"
 }

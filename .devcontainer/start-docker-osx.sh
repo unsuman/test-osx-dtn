@@ -1,5 +1,7 @@
 #!/bin/bash
 # CMD from the docker-osx Dockerfile
+ls -a
+
 ! [[ -e "${BASESYSTEM_IMAGE:-BaseSystem.img}" ]] \
     && printf '%s\n' "No BaseSystem.img available, downloading ${SHORTNAME}" \
     && make \
