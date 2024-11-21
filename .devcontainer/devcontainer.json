@@ -14,5 +14,6 @@
     "-e", "DISPLAY=${env:DISPLAY:-:0.0}",
     "-e", "EXTRA=-display none -vnc 0.0.0.0:99,password=off",
     "-e", "SHORTNAME=ventura"
-  ]
+  ],
+  "onCreateCommand": "start-docker-osx.sh"
 }
