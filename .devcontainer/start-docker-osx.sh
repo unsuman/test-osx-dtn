@@ -3,15 +3,15 @@
 ls /usr/local/bin/ -a
 
 # CMD from the docker-osx Dockerfile
-! [[ -e "${BASESYSTEM_IMAGE:-BaseSystem.img}" ]] \
+! [[ -e "${BASESYSTEM_IMAGE:-/home/arch/OSX-KVM/BaseSystem.img}" ]] \
     && printf '%s\n' "No BaseSystem.img available, downloading ${SHORTNAME}" \
     && make \
-    && qemu-img convert BaseSystem.dmg -O qcow2 -p -c ${BASESYSTEM_IMAGE:-BaseSystem.img} \
+    && qemu-img convert BaseSystem.dmg -O qcow2 -p -c ${BASESYSTEM_IMAGE:-/home/arch/OSX-KVM/BaseSystem.img} \
     && rm ./BaseSystem.dmg \
 ; sudo touch /dev/kvm /dev/snd "${IMAGE_PATH}" "${BOOTDISK}" "${ENV}" 2>/dev/null || true \
 ; sudo chown -R $(id -u):$(id -g) /dev/kvm /dev/snd "${IMAGE_PATH}" "${BOOTDISK}" "${ENV}" 2>/dev/null || true \
 ; [[ "${NOPICKER}" == true ]] && { \
-    sed -i '/^.*InstallMedia.*/d' Launch.sh \
+    sed -i '/^.*InstallMedia.*/d' /usr/local/bin/Launch.sh \
     && export BOOTDISK="${BOOTDISK:=/home/arch/OSX-KVM/OpenCore/OpenCore-nopicker.qcow2}" \
 ; } \
 || export BOOTDISK="${BOOTDISK:=/home/arch/OSX-KVM/OpenCore/OpenCore.qcow2}" \
@@ -39,4 +39,4 @@ ls /usr/local/bin/ -a
         --height "${HEIGHT:-1080}" \
         --output-bootdisk "${BOOTDISK:=/home/arch/OSX-KVM/OpenCore/OpenCore.qcow2}" \
 || exit 1 ; } \
-; /usr/local/bin/enable-ssh.sh && /bin/bash -c /usr/local/bin/Launch.sh
+; /usr/local/bin/enable-ssh.sh && /usr/local/bin/Launch.sh
