@@ -15,5 +15,5 @@
     "-e", "EXTRA=-display none -vnc 0.0.0.0:99,password=off",
     "-e", "SHORTNAME=ventura"
   ],
-  "onCreateCommand": "/tmp/scripts/start-docker-osx.sh"
+  "onCreateCommand": "start-docker-osx.sh"
 }
