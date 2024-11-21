@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ls -a
+ls /usr/local/bin/ -a
 
 # CMD from the docker-osx Dockerfile
 ! [[ -e "${BASESYSTEM_IMAGE:-BaseSystem.img}" ]] \
@@ -39,4 +39,4 @@ ls -a
         --height "${HEIGHT:-1080}" \
         --output-bootdisk "${BOOTDISK:=/home/arch/OSX-KVM/OpenCore/OpenCore.qcow2}" \
 || exit 1 ; } \
-; ./enable-ssh.sh && /bin/bash -c ./Launch.sh
+; ./usr/local/bin/enable-ssh.sh && /bin/bash -c ./Launch.sh
