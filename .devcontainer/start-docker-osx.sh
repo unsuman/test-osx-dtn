@@ -39,4 +39,4 @@ ls /usr/local/bin/ -a
         --height "${HEIGHT:-1080}" \
         --output-bootdisk "${BOOTDISK:=/home/arch/OSX-KVM/OpenCore/OpenCore.qcow2}" \
 || exit 1 ; } \
-; /usr/local/bin/enable-ssh.sh && /bin/bash -c /Launch.sh
+; /usr/local/bin/enable-ssh.sh && /bin/bash -c /usr/local/bin/Launch.sh
