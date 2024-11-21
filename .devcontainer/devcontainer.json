@@ -6,7 +6,7 @@
   "runArgs": [
     "--rm",
     "-p", "50922:10022",
-    "-p", "5999:5999",
+    "-p", "6001:5999",
     "--device=/dev/kvm",
     "--cap-add=NET_ADMIN",
     "--stop-timeout", "120",
