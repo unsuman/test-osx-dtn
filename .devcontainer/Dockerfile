@@ -4,6 +4,9 @@ FROM sickcodes/docker-osx:latest
 # Copy the start script into the container
 COPY start-docker-osx.sh /workspace/start-docker-osx.sh
 
+# Set execute permissions for the start script
+RUN chmod +x /workspace/start-docker-osx.sh
+
 # Expose the ports for SSH and VNC
 EXPOSE 50923
 EXPOSE 6001
