@@ -1,4 +1,4 @@
 {
   "name": "OSX docker",
-  "onCreateCommand": "/workspace/setup.sh && /workspace/start-docker-osx.sh"
+  "onCreateCommand": "/workspace/start-docker-osx.sh"
 }
