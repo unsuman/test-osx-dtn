@@ -2,13 +2,13 @@
 FROM sickcodes/docker-osx:latest
 
 # Create a directory for the script
-RUN mkdir -p /workspace/scripts
+RUN mkdir -p /tmp/scripts
 
 # Copy the start script into the container
-COPY start-docker-osx.sh /workspace/scripts/start-docker-osx.sh
+COPY start-docker-osx.sh /tmp/scripts/start-docker-osx.sh
 
 # Set execute permissions for the start script
-RUN chmod +x /workspace/scripts/start-docker-osx.sh
+RUN chmod +x /tmp/scripts/start-docker-osx.sh
 
 # Expose the ports for SSH and VNC
 EXPOSE 50923
