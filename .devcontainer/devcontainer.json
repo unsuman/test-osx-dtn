@@ -1,19 +1,19 @@
 {
-  "name": "OSX docker",
+  "name": "OSX Development Environment",
   "build": {
     "dockerfile": "Dockerfile"
   },
   "runArgs": [
-    "--rm",
-    "-p", "50925:10022",
-    "-p", "6003:5999",
-    "--device=/dev/kvm",
-    "--cap-add=NET_ADMIN",
-    "--stop-timeout", "120",
-    "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
+    "--privileged", // Required for KVM
     "-e", "DISPLAY=${env:DISPLAY:-:0.0}",
+    "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
+    "-p", "50922:10022", // SSH port
+    "-p", "5999:5999",   // VNC port
+    "--device=/dev/kvm", 
+    "--cap-add=NET_ADMIN",
     "-e", "EXTRA=-display none -vnc 0.0.0.0:99,password=off",
     "-e", "SHORTNAME=ventura"
   ],
-  "postCreateCommand": "/workspaces/start-docker-osx.sh"
+  "postCreateCommand": "bash .devcontainer/start-docker-osx.sh",
+  "remoteUser": "root"
 }

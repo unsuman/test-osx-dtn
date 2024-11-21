@@ -1,7 +1,12 @@
 FROM sickcodes/docker-osx:latest
 
-# Expose the ports for SSH and the web UI
-EXPOSE 50925
-EXPOSE 6003
+# Install development tools
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    wget \
+    vim \
+    && rm -rf /var/lib/apt/lists/*
 
-ENTRYPOINT ["/bin/bash"]
+COPY start-docker-osx.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/start-docker-osx.sh
