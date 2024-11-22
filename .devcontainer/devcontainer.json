@@ -1,28 +1,19 @@
 {
-  "name": "Docker in Docker",
-  "dockerFile": "Dockerfile",
-  "runArgs": ["--init"],
-  "mounts": [
-    {
-      "source": "/var/run/docker.sock",
-      "target": "/var/run/docker.sock",
-      "type": "bind"
-    }
+  "name": "OSX docker",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "runArgs": [
+    "--rm",
+    "-p", "50924:10022",
+    "-p", "6002:5999",
+    "--device=/dev/kvm",
+    "--cap-add=NET_ADMIN",
+    "--stop-timeout", "120",
+    "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
+    "-e", "DISPLAY=${env:DISPLAY:-:0.0}",
+    "-e", "EXTRA=-display none -vnc 0.0.0.0:99,password=off",
+    "-e", "SHORTNAME=ventura"
   ],
-  "features": {
-    "docker-in-docker": {
-      "version": "latest",
-      "moby": true,
-      "dockerDashComposeVersion": "v2"
-    }
-  },
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "ms-azuretools.vscode-docker"
-      ]
-    }
-  },
-  "remoteUser": "vscode",
-  "postCreateCommand": "/usr/local/bin/start-docker-osx.sh"
+  "onCreateCommand": "start-docker-osx.sh"
 }
