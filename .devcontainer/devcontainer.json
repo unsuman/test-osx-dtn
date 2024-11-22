@@ -1,16 +1,56 @@
 {
-  "name": "OSX Development Environment",
-  "build": {
-    "dockerfile": "Dockerfile"
+  "name": "Docker Development Environment",
+  "dockerFile": "Dockerfile",
+  
+  // Configure container features
+  "features": {
+      "ghcr.io/devcontainers/features/docker-in-docker:2": {
+          "version": "latest",
+          "moby": true,
+          "dockerDashComposeVersion": "v2"
+      }
   },
+
+  // Mount Docker socket and add permissions
   "runArgs": [
-    "-e", "DISPLAY=${env:DISPLAY:-:0.0}",
-    "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
-    "-p", "50922:10022", // SSH port
-    "-p", "5999:5999",   // VNC port
-    "--device=/dev/kvm", 
-    "--cap-add=NET_ADMIN",
-    "-e", "EXTRA=-display none -vnc 0.0.0.0:99,password=off",
-    "-e", "SHORTNAME=ventura"
+      "--privileged",
+      "--name", "docker-dev"
+  ],
+
+  // Configure environment variables
+  "containerEnv": {
+      "DOCKER_BUILDKIT": "1"
+  },
+
+  // Install extensions
+  "customizations": {
+      "vscode": {
+          "extensions": [
+              "ms-azuretools.vscode-docker",
+              "ms-vscode-remote.remote-containers",
+              "github.copilot",
+              "eamodio.gitlens"
+          ],
+          "settings": {
+              "terminal.integrated.defaultProfile.linux": "bash"
+          }
+      }
+  },
+
+  // Mount additional volumes
+  "mounts": [
+      "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,readonly"
+  ],
+
+  // Configure user
+  "remoteUser": "vscode",
+
+  // Run commands after container is created
+  "postCreateCommand": "sudo chown vscode:vscode /var/run/docker.sock",
+
+  // Forward ports
+  "forwardPorts": [
+      3000,
+      8080
   ]
 }
