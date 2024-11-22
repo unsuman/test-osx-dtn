@@ -1,44 +1,16 @@
 {
-  "name": "Docker OSX Development Environment",
-  "dockerFile": "Dockerfile",
-  
-  "features": {
-      "ghcr.io/devcontainers/features/docker-in-docker:2": {
-          "version": "latest",
-          "moby": true
-      }
+  "name": "Docker-in-Docker Development Environment",
+  "build": {
+    "dockerfile": "Dockerfile"
   },
-
   "runArgs": [
-      "--privileged",
-      "--device=/dev/kvm:/dev/kvm"
+    "--privileged",
+    "-v", "/var/run/docker.sock:/var/run/docker.sock"
   ],
-
-  // Correct mount syntax
-  "mounts": [
-      {
-          "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.ssh",
-          "target": "/home/vscode/.ssh",
-          "type": "bind",
-          "readonly": true
-      }
-  ],
-
-  "customizations": {
-      "vscode": {
-          "extensions": [
-              "ms-azuretools.vscode-docker",
-              "ms-vscode-remote.remote-containers"
-          ]
-      }
-  },
-
   "remoteUser": "vscode",
-
   "postCreateCommand": "sudo chown vscode:vscode /var/run/docker.sock",
-
   "forwardPorts": [
-      5900,
-      10022
+    5900,
+    10022
   ]
 }

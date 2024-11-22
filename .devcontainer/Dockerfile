@@ -1,4 +1,4 @@
-FROM sickcodes/docker-osx:latest
+FROM ubuntu:20.04
 
 # Install required packages
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
@@ -8,26 +8,12 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     git \
     vim \
     openssh-server \
+    docker.io \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Create non-root user
-ARG USERNAME=vscode
-ARG USER_UID=1000
-ARG USER_GID=$USER_UID
+# Set up environment variables
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN groupadd --gid $USER_GID $USERNAME \
-    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
-    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
-    && chmod 0440 /etc/sudoers.d/$USERNAME
-
-# Setup KVM permissions
-RUN usermod -aG kvm $USERNAME
-
-WORKDIR /workspace
-
-USER $USERNAME
-
-# Copy launch script
-COPY Launch.sh /workspace/
-RUN sudo chmod +x /workspace/Launch.sh
+# Start Docker daemon (optional, if you want to run Docker daemon inside the container)
+CMD ["dockerd"]
