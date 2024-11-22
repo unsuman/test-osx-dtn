@@ -1,31 +1,25 @@
-FROM ubuntu:20.04
+FROM mcr.microsoft.com/devcontainers/base:ubuntu
 
-# Create the vscode user
-RUN useradd -ms /bin/bash vscode
-
-# Allow vscode user to use sudo without a password
-RUN echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-
-# Debugging step: Print the base image information
-RUN cat /etc/os-release
-
-# Separate step to run apt-get update and capture its output
-RUN apt-get update && apt-get upgrade -y
-
-# Install required packages
-RUN export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends \
-    sudo \
+# Install additional packages
+RUN apt-get update && apt-get install -y \
+    apt-transport-https \
+    ca-certificates \
     curl \
-    git \
-    vim \
-    openssh-server \
-    docker.io \
-    && apt-get clean \
+    gnupg \
+    lsb-release \
     && rm -rf /var/lib/apt/lists/*
 
-# Set up environment variables
-ENV DEBIAN_FRONTEND=noninteractive
+# Add Docker's official GPG key
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
-# Start Docker daemon (optional, if you want to run Docker daemon inside the container)
-CMD ["dockerd"]
+# Set up Docker repository
+RUN echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# Install Docker CLI
+RUN apt-get update && apt-get install -y docker-ce-cli \
+    && rm -rf /var/lib/apt/lists/*
+
+# Add user to docker group
+RUN groupadd docker && usermod -aG docker vscode
