@@ -9,8 +9,11 @@ RUN echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 # Debugging step: Print the base image information
 RUN cat /etc/os-release
 
+# Separate step to run apt-get update and capture its output
+RUN apt-get update && apt-get upgrade -y
+
 # Install required packages
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
     sudo \
     curl \
