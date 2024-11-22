@@ -1,29 +1,17 @@
-FROM mcr.microsoft.com/devcontainers/base:ubuntu
+FROM sickcodes/docker-osx:latest
 
-# Install additional packages
+# Install required packages
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
+    sudo \
     curl \
     git \
-    gnupg \
-    jq \
-    less \
-    lsb-release \
-    nano \
     vim \
-    wget \
-    zsh \
+    openssh-server \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Docker Compose v2
-RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg \
-    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
-    | tee /etc/apt/sources.list.d/docker.list > /dev/null \
-    && apt-get update \
-    && apt-get install -y docker-compose-plugin
-
-# Create and configure non-root user
+# Create non-root user
 ARG USERNAME=vscode
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
@@ -33,20 +21,13 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
-# Setup Docker permissions
-RUN usermod -aG docker $USERNAME
+# Setup KVM permissions
+RUN usermod -aG kvm $USERNAME
 
-# Set working directory
 WORKDIR /workspace
 
-# Switch to non-root user
 USER $USERNAME
 
-# Setup shell
-RUN sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended \
-    && echo "source /usr/share/bash-completion/completions/docker" >> ~/.bashrc \
-    && echo "source /usr/share/bash-completion/completions/git" >> ~/.bashrc
-
-# Add any custom scripts or configurations
-COPY scripts/ /usr/local/bin/
-RUN sudo chmod +x /usr/local/bin/*
+# Copy launch script
+COPY Launch.sh /workspace/
+RUN sudo chmod +x /workspace/Launch.sh

@@ -1,56 +1,44 @@
 {
-  "name": "Docker Development Environment",
+  "name": "Docker OSX Development Environment",
   "dockerFile": "Dockerfile",
   
-  // Configure container features
   "features": {
       "ghcr.io/devcontainers/features/docker-in-docker:2": {
           "version": "latest",
-          "moby": true,
-          "dockerDashComposeVersion": "v2"
+          "moby": true
       }
   },
 
-  // Mount Docker socket and add permissions
   "runArgs": [
       "--privileged",
-      "--name", "docker-dev"
+      "--device=/dev/kvm:/dev/kvm"
   ],
 
-  // Configure environment variables
-  "containerEnv": {
-      "DOCKER_BUILDKIT": "1"
-  },
+  // Correct mount syntax
+  "mounts": [
+      {
+          "source": "${localEnv:HOME}${localEnv:USERPROFILE}/.ssh",
+          "target": "/home/vscode/.ssh",
+          "type": "bind",
+          "readonly": true
+      }
+  ],
 
-  // Install extensions
   "customizations": {
       "vscode": {
           "extensions": [
               "ms-azuretools.vscode-docker",
-              "ms-vscode-remote.remote-containers",
-              "github.copilot",
-              "eamodio.gitlens"
-          ],
-          "settings": {
-              "terminal.integrated.defaultProfile.linux": "bash"
-          }
+              "ms-vscode-remote.remote-containers"
+          ]
       }
   },
 
-  // Mount additional volumes
-  "mounts": [
-      "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,readonly"
-  ],
-
-  // Configure user
   "remoteUser": "vscode",
 
-  // Run commands after container is created
   "postCreateCommand": "sudo chown vscode:vscode /var/run/docker.sock",
 
-  // Forward ports
   "forwardPorts": [
-      3000,
-      8080
+      5900,
+      10022
   ]
 }
