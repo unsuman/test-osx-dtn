@@ -23,3 +23,6 @@ RUN apt-get update && apt-get install -y docker-ce-cli \
 
 # Add user to docker group
 RUN groupadd docker && usermod -aG docker vscode
+
+# Copy the script into the container
+COPY start-docker-osx.sh /usr/local/bin/start-docker-osx.sh

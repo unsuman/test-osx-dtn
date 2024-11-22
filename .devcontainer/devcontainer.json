@@ -24,5 +24,5 @@
     }
   },
   "remoteUser": "vscode",
-  "onCreateCommand": "/workspaces/test-osx-dtn/start-docker-osx.sh"
+  "onCreateCommand": "/usr/local/bin/start-docker-osx.sh"
 }
