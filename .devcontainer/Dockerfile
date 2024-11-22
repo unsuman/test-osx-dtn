@@ -6,6 +6,9 @@ RUN useradd -ms /bin/bash vscode
 # Allow vscode user to use sudo without a password
 RUN echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
+# Debugging step: Print the base image information
+RUN cat /etc/os-release
+
 # Install required packages
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
