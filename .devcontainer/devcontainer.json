@@ -4,7 +4,6 @@
     "dockerfile": "Dockerfile"
   },
   "runArgs": [
-    "--privileged", // Required for KVM
     "-e", "DISPLAY=${env:DISPLAY:-:0.0}",
     "-v", "/tmp/.X11-unix:/tmp/.X11-unix",
     "-p", "50922:10022", // SSH port
@@ -13,7 +12,5 @@
     "--cap-add=NET_ADMIN",
     "-e", "EXTRA=-display none -vnc 0.0.0.0:99,password=off",
     "-e", "SHORTNAME=ventura"
-  ],
-  "postCreateCommand": "bash .devcontainer/start-docker-osx.sh",
-  "remoteUser": "root"
+  ]
 }

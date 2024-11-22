@@ -1,11 +1,11 @@
-# .devcontainer/Dockerfile
 FROM sickcodes/docker-osx:latest
 
-# Using apk package manager since base image is Alpine Linux
-RUN apk update && apk add --no-cache \
-    curl \
-    git \
-    wget
+# Install any additional dependencies if needed
+# RUN apt-get update && apt-get install -y <dependencies>
 
-COPY startup.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/startup.sh
+# Expose the ports for SSH and the web UI
+EXPOSE 50922
+EXPOSE 5999
+
+# Set the entrypoint to run the macOS image
+ENTRYPOINT ["/bin/bash"]
