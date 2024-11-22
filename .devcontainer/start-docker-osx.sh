@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker run -i \
+sudo docker run -i \
     --device /dev/kvm \
     -p 50922:10022 \
     -p 5999:5999 \
