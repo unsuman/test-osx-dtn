@@ -3,6 +3,9 @@ FROM ubuntu:20.04
 # Create the vscode user
 RUN useradd -ms /bin/bash vscode
 
+# Allow vscode user to use sudo without a password
+RUN echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
 # Install required packages
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
